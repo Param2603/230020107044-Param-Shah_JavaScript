@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Todo List</title>
+  <style>
+    body { font-family: Arial; }
+    button { margin-left: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1>Todo List</h1>
+
+  <input type="text" id="todoInput" placeholder="Enter your task" />
+  <button id="addBtn">Add</button>
+
+  <div id="todoList"></div>
+
+  <script>
+    let input = document.getElementById("todoInput");
+    let addBtn = document.getElementById("addBtn");
+    let todoListDiv = document.getElementById("todoList");
+
+    let editId = null;
+
+    let todos = JSON.parse(localStorage.getItem("todoData")) || [];
+
+    function saveToLocalStorage() {
+      localStorage.setItem("todoData", JSON.stringify(todos));
+    }
+
+    function renderTodos() {
+      todoListDiv.innerHTML = "";
+
+      todos.forEach((todo) => {
+        let div = document.createElement("div");
+
+        let p = document.createElement("p");
+        p.innerText = `${todo.id}. ${todo.text}`;
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "Delete";
+        deleteBtn.onclick = () => deleteTodo(todo.id);
+
+        let editBtn = document.createElement("button");
+        editBtn.innerText = "Edit";
+        editBtn.onclick = () => editTodo(todo.id);
+
+        div.appendChild(p);
+        div.appendChild(deleteBtn);
+        div.appendChild(editBtn);
+
+        todoListDiv.appendChild(div);
+      });
+    }
+
+    function addTodo() {
+      if (!input.value.trim()) {
+        alert("First you have to fill input text");
+        return;
+      }
+
+      if (editId !== null) {
+        // Update
+        todos = todos.map(todo =>
+          todo.id === editId ? { ...todo, text: input.value } : todo
+        );
+        editId = null;
+        addBtn.innerText = "Add";
+      } else {
+        // Add new
+        todos.push({
+          id: Date.now(),   // unique ID
+          text: input.value
+        });
+      }
+
+      input.value = "";
+      saveToLocalStorage();
+      renderTodos();
+    }
+
+    function deleteTodo(id) {
+      todos = todos.filter(todo => todo.id !== id);
+      saveToLocalStorage();
+      renderTodos();
+    }
+
+    function editTodo(id) {
+      let todo = todos.find(todo => todo.id === id);
+      input.value = todo.text;
+      editId = id;
+      addBtn.innerText = "Update";
+    }
+
+    addBtn.addEventListener("click", addTodo);
+
+    renderTodos();
+  </script>
+
+</body>
+</html>

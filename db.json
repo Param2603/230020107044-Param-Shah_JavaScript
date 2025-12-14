@@ -1,0 +1,39 @@
+{
+    "Books": [
+        {
+            "Book id": 1,
+            "Title": "Clean Code",
+            "Author": "Robert C. Martin",
+            "Quantity": 5,
+            "Price": 450
+        },
+        {
+            "Book id": 2,
+            "Title": "The Pragmatic Programmer",
+            "Author": "Andrew Hunt",
+            "Quantity": 3,
+            "Price": 550
+        },
+        {
+            "Book id": 3,
+            "Title": "Introduction to Algorithms",
+            "Author": "Thomas H. Cormen",
+            "Quantity": 2,
+            "Price": 900
+        },
+        {
+            "Book id": 4,
+            "Title": "You Don’t Know JS",
+            "Author": "Kyle Simpson",
+            "Quantity": 6,
+            "Price": 350
+        },
+        {
+            "Book id": 5,
+            "Title": "Python Crash Course",
+            "Author": "Eric Matthes",
+            "Quantity": 4,
+            "Price": 500
+        }
+    ]
+}
